@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service(value = "orderService")
 public class OrderServiceImpl implements OrderService{
@@ -17,6 +19,13 @@ public class OrderServiceImpl implements OrderService{
         Order myorder = orderrepos.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Order " + id + " Not Found!"));
         return myorder;
+    }
+
+    @Override
+    public List<Order> getOrdersByAdvance() {
+        List<Order> list = new ArrayList<>();
+        orderrepos.findAll().iterator().forEachRemaining(list::add);
+        return list;
     }
 
     @Override
